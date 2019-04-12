@@ -176,4 +176,40 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from mmall_product
+    ORDER BY id asc
+  </select>
+  <select id="selectByNameAndProductId" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List"/>
+    from mmall_product
+    <where>
+      <if test="productName != null">
+        and name like #{productName}
+      </if>
+      <if test="productId != null">
+        and id = #{productId}
+      </if>
+    </where>
+  </select>
+  <select id="selectByNameAndCategoryIds" resultMap="BaseResultMap" parameterType="map">
+    --注意对集合的处理，因为传来的是个idlist
+    select
+    <include refid="Base_Column_List"/>
+    from mmall_product
+    where status = 1
+    <if test="productName != null">
+      and name like #{productName}
+    </if>
+    <if test="categoryIdList != null">
+      and category_id in
+      <foreach item="item" index="index" open="(" separator="," close=")" collection="categoryIdList">
+        --以item为元素去遍历collection，碰到元素时，从左括号开始，以逗号分割，以右括号结束。右括号后面不会出现逗号，已自动处理
+        #{item}
+      </foreach>
+    </if>
+  </select>
 </mapper>

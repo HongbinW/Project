@@ -80,7 +80,7 @@ public class CategoryServiceImpl implements ICategoryService {
      * @return
      */
     //拿到id后要查找其子节点，还要判断子节点下是否还有子节点，再把他们放到一起
-    public ServerResponse selectCategoryAndChildrenById(Integer categoryId){
+    public ServerResponse<List<Integer>> selectCategoryAndChildrenById(Integer categoryId){
         Set<Category> categorySet = Sets.newHashSet();  //guava提供
         findChildCategory(categorySet,categoryId);
         List<Integer> categoryIdList = Lists.newArrayList();

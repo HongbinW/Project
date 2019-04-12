@@ -1,6 +1,9 @@
 package com.mmall.dao;
 
 import com.mmall.pojo.Product;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface ProductMapper {
     int deleteByPrimaryKey(Integer id);
@@ -13,5 +16,11 @@ public interface ProductMapper {
 
     int updateByPrimaryKeySelective(Product record);
 
-    int updateByPrimaryKey(Product record);
+    int updateByPrimaryKey(Product record1);
+
+    List<Product> selectList();     //pageHelper会自动把limit和offset注入进去
+
+    List<Product> selectByNameAndProductId(@Param("productName")String productName,@Param("productId")Integer productId);
+
+    List<Product> selectByNameAndCategoryIds(@Param("productName")String productName,@Param("categoryIdList")List<Integer> categoryIdList);
 }
