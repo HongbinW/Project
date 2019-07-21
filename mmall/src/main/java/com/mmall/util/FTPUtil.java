@@ -42,7 +42,7 @@ public class FTPUtil {
         logger.info("开始连接FTP服务器");
         boolean result = ftpUtil.uploadFile("img",fileList);  //传到FTP服务器img文件夹下
 
-        logger.info("开始连接FTP服务器，结束上传，上传结果：{}");
+        logger.info("开始连接FTP服务器，结束上传，上传结果：{}",result);
 
         return result;
     }
@@ -55,6 +55,7 @@ public class FTPUtil {
             //是否需要切换文件夹
             try {
                 ftpClient.changeWorkingDirectory(remotePath);
+                System.out.println(ftpClient.printWorkingDirectory());
                 ftpClient.setBufferSize(1024);
                 ftpClient.setControlEncoding("UTF-8");
                 ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);//设为二进制防止乱码

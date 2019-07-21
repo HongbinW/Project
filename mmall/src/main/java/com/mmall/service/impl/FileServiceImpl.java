@@ -39,6 +39,10 @@ public class FileServiceImpl implements IFileService {
 
         File targetFile = new File(path,uploadFileName);
 
+        System.out.println("#############" + targetFile);
+        System.out.println("-------------" + uploadFileName);
+        System.out.println("*************" + path);
+
         try {
             file.transferTo(targetFile);
             //文件上传成功
