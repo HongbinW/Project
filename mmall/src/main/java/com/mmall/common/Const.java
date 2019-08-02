@@ -145,4 +145,8 @@ public class Const {
             throw new RuntimeException("没有找到对应的枚举");
         }
     }
+
+    public interface RedisCacheExtime{
+        int REDIS_SESSION_EXTIME = 60 * 30; //30分钟
+    }
 }
