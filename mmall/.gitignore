@@ -32,3 +32,6 @@ target/
 # system ignore
 .DS_Store
 Thumbs.db
+
+# 二期为演示集群，不同index.jsp
+index.jsp

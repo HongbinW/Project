@@ -17,6 +17,8 @@ public class Const {
     public static final String EMAIL = "email";
     public static final String USERNAME = "username";
 
+    public static final String TOKEN_PREFIX = "token_";
+
     //使用内部接口类，把常量进行分组。效果：没有枚举那么繁重，又起到了分组的效果,且内部是常量
     public interface Role{
         int ROLE_CUSTOMER = 0;    //普通用户
@@ -148,5 +150,6 @@ public class Const {
 
     public interface RedisCacheExtime{
         int REDIS_SESSION_EXTIME = 60 * 30; //30分钟
+        int FORGET_TOKEN_EXTIME = 60 * 60 * 12;
     }
 }
