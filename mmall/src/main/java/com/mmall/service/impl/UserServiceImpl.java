@@ -6,7 +6,7 @@ import com.mmall.dao.UserMapper;
 import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
 import com.mmall.util.MD5Util;
-import com.mmall.util.RedisPoolUtil;
+import com.mmall.util.RedisShardedPoolUtil;
 import net.sf.jsqlparser.schema.Server;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,7 +140,7 @@ public class UserServiceImpl implements IUserService {
         if(resultCount > 0){
             //说明问题及问题答案是该用户的，并且是正确的
             String forgetToken = UUID.randomUUID().toString();      //形式8a142263-d4bd-4e17-9c54-13037e85b8b3，主要是一个基本上不可能重复的字符串
-            RedisPoolUtil.setEx(Const.TOKEN_PREFIX + username,forgetToken,Const.RedisCacheExtime.FORGET_TOKEN_EXTIME);
+            RedisShardedPoolUtil.setEx(Const.TOKEN_PREFIX + username,forgetToken,Const.RedisCacheExtime.FORGET_TOKEN_EXTIME);
 //            TokenCache.setKey(TokenCache.TOKEN_PREFIX + username,forgetToken);   //token_起namespace作用
             return ServerResponse.createBySuccess(forgetToken);
         }
@@ -164,7 +164,7 @@ public class UserServiceImpl implements IUserService {
             //用户不存在
             return ServerResponse.createByErrorMessage("用户不存在");
         }
-        String token = RedisPoolUtil.get(Const.TOKEN_PREFIX + username);
+        String token = RedisShardedPoolUtil.get(Const.TOKEN_PREFIX + username);
 //        String token = TokenCache.getKey(TokenCache.TOKEN_PREFIX + username);
         if(StringUtils.isBlank(token)){
             return ServerResponse.createByErrorMessage("token无效或过期");

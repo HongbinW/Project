@@ -9,10 +9,7 @@ import com.mmall.pojo.User;
 import com.mmall.service.IFileService;
 import com.mmall.service.IProductService;
 import com.mmall.service.IUserService;
-import com.mmall.util.CookieUtil;
-import com.mmall.util.JsonUtil;
-import com.mmall.util.PropertiesUtil;
-import com.mmall.util.RedisPoolUtil;
+import com.mmall.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -57,7 +54,7 @@ public class ProductManageController {
         if (StringUtils.isEmpty(loginToken)){
             return ServerResponse.createByErrorMessage("用户未登录");
         }
-        String userJsonString = RedisPoolUtil.get(loginToken);
+        String userJsonString = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.string2Obj(userJsonString,User.class);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录，请登录管理员");
@@ -82,7 +79,7 @@ public class ProductManageController {
         if (StringUtils.isEmpty(loginToken)){
             return ServerResponse.createByErrorMessage("用户未登录");
         }
-        String userJsonString = RedisPoolUtil.get(loginToken);
+        String userJsonString = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.string2Obj(userJsonString,User.class);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录，请登录管理员");
@@ -100,7 +97,7 @@ public class ProductManageController {
         if (StringUtils.isEmpty(loginToken)){
             return ServerResponse.createByErrorMessage("用户未登录");
         }
-        String userJsonString = RedisPoolUtil.get(loginToken);
+        String userJsonString = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.string2Obj(userJsonString,User.class);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录，请登录管理员");
@@ -119,7 +116,7 @@ public class ProductManageController {
         if (StringUtils.isEmpty(loginToken)){
             return ServerResponse.createByErrorMessage("用户未登录");
         }
-        String userJsonString = RedisPoolUtil.get(loginToken);
+        String userJsonString = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.string2Obj(userJsonString,User.class);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录，请登录管理员");
@@ -138,7 +135,7 @@ public class ProductManageController {
         if (StringUtils.isEmpty(loginToken)){
             return ServerResponse.createByErrorMessage("用户未登录");
         }
-        String userJsonString = RedisPoolUtil.get(loginToken);
+        String userJsonString = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.string2Obj(userJsonString,User.class);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
@@ -166,7 +163,7 @@ public class ProductManageController {
         if (StringUtils.isEmpty(loginToken)){
             return ServerResponse.createByErrorMessage("用户未登录");
         }
-        String userJsonString = RedisPoolUtil.get(loginToken);
+        String userJsonString = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.string2Obj(userJsonString,User.class);
 
         if(user == null){
@@ -205,7 +202,7 @@ public class ProductManageController {
             resultMap.put("msg","请登录管理员");
             return resultMap;
         }
-        String userJsonString = RedisPoolUtil.get(loginToken);
+        String userJsonString = RedisShardedPoolUtil.get(loginToken);
         User user = JsonUtil.string2Obj(userJsonString,User.class);
         if(user == null){
             resultMap.put("success",false);
