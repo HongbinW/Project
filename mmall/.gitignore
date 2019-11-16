@@ -34,4 +34,4 @@ target/
 Thumbs.db
 
 # 二期为演示集群，不同index.jsp
-index.jsp
+/src/main/webapp/index.jsp
