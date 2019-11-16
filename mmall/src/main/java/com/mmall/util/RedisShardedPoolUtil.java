@@ -98,12 +98,12 @@ public class RedisShardedPoolUtil {
     }
 
     public static void main(String[] args) {
-        ShardedJedis jedis = RedisShardedPool.getJedis();
-        RedisShardedPoolUtil.set("keyTest","value");
+        //ShardedJedis jedis = RedisShardedPool.getJedis();
+       // RedisShardedPoolUtil.set("keyTest","value");
         String value = RedisShardedPoolUtil.get("keyTest");
-        RedisShardedPoolUtil.setEx("keyex","valueex",60*10);
-        RedisShardedPoolUtil.expire("keyTest",20*60);
-        RedisShardedPoolUtil.del("keyTest");
+        System.out.println(value);
+        //RedisShardedPoolUtil.setEx("keyex","valueex",60*10);
+        //RedisShardedPoolUtil.expire("keyTest",20*60);
         System.out.println("end");
     }
 }
