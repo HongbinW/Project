@@ -152,4 +152,9 @@ public class Const {
         int REDIS_SESSION_EXTIME = 60 * 30; //30分钟
         int FORGET_TOKEN_EXTIME = 60 * 60 * 12;
     }
+
+    public interface REDIS_LOCK{
+        String CLOSE_ORDER_TASK_LOCK = "CLOSE_ORDER_TASK_LOCK"; //关闭订单的分布式锁
+
+    }
 }
