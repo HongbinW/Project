@@ -40,7 +40,10 @@ public class UserSpringSessionController {
     @RequestMapping(value = "login.do",method = RequestMethod.GET)
     @ResponseBody//返回时，自动通过Spring MVC的jason插件，将返回值序列化为json
     public ServerResponse<User> login(String username, String password, HttpSession session){
-        //service ---> mybatis ---> dao
+        //测试SpringMVC全局异常
+        int i = 0;
+        int j = 666 / i;
+
         ServerResponse<User> response = iUserService.login(username,password);
         if(response.isSuccess()){
             session.setAttribute(Const.CURRENT_USER,response.getData());

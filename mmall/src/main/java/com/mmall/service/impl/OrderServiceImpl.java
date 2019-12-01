@@ -29,6 +29,7 @@ import com.mmall.vo.OrderVo;
 import com.mmall.vo.ShippingVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,6 @@ import java.util.*;
 @Service("iOrderService")
 @Slf4j
 public class OrderServiceImpl implements IOrderService {
-
 //    private static final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
     @Autowired
@@ -586,5 +586,29 @@ public class OrderServiceImpl implements IOrderService {
             return ServerResponse.createBySuccess();
         }
         return ServerResponse.createByError();
+    }
+
+    @Override
+    public void closeOrder(int hour) {
+        Date closeDateTime = DateUtils.addHours(new Date(),-hour);
+        List<Order> list = orderMapper.selectOrderStatusByCreateTime(Const.OrderStatusEnum.NO_PAY.getCode(),DateTimeUtil.dateToStr(closeDateTime));
+        for (Order order : list){
+           List<OrderItem> orderItemList = orderItemMapper.getByOrderNo(order.getOrderNo());
+           for (OrderItem orderItem : orderItemList){
+               //一定要用主键作为where条件，防止锁表
+                Integer stock = productMapper.selectStockByProductId(orderItem.getProductId());
+                //考虑到已生成订单例的商品，被删除的情况
+                if (stock == null){
+                    continue;
+                }
+                //恢复库存
+                Product product = new Product();
+                product.setId(orderItem.getProductId());
+                product.setStock(stock+orderItem.getQuantity());
+                productMapper.updateByPrimaryKeySelective(product);
+           }
+           orderMapper.closeOrderByOrderId(order.getId());
+           log.info("关闭订单OrderNo：{}",order.getId());
+        }
     }
 }
